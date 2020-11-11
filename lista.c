@@ -23,9 +23,17 @@ typedef struct lista_iterador{
 #define EXITO 0
 #define ERROR -1
 
+void destruir_nodo(nodo_t* nodo) {
+    if (nodo->siguiente)
+        destruir_nodo(nodo->siguiente);
+    free(nodo);
+}
+
 void lista_destruir(lista_t* lista) {
-    if (lista->nodo_inicio) {
-        free(lista->nodo_inicio);
+    size_t elementos_toales = lista->cantidad;
+    if (lista && (elementos_toales > 0)) {
+        if (lista->nodo_inicio)
+            destruir_nodo(lista->nodo_inicio);
     }
     if (lista) {
         free(lista);
@@ -34,16 +42,21 @@ void lista_destruir(lista_t* lista) {
 
 int lista_insertar(lista_t* lista, void* elemento) {
     size_t final = lista->cantidad;
-    if (final == 0) {
-        nodo_t* nodo_aux = calloc(1, sizeof(nodo_t));
-        if (!nodo_aux) return ERROR;
-        lista->nodo_fin = nodo_aux; 
-        lista->nodo_fin[final].elemento = elemento;
-        lista->nodo_fin[final].siguiente = NULL;
-        lista->nodo_inicio = lista->nodo_fin;
-        lista->cantidad ++;
+    nodo_t* nodo_anterior = NULL;
+    if (final > 0)
+        nodo_anterior = lista->nodo_fin;
+    nodo_t* nodo_aux = calloc(1, sizeof(nodo_t));
+    if (!nodo_aux) {
+        free(nodo_aux);
+        return ERROR;
     }
-    printf("\n primer elemento de la lista: %p", lista->nodo_inicio[0].elemento);
+    lista->nodo_fin = nodo_aux; 
+    lista->nodo_fin->elemento = elemento;
+    lista->nodo_fin->siguiente = NULL;
+    if (final > 0) nodo_anterior->siguiente = lista->nodo_fin;
+    if (final == 0) lista->nodo_inicio = lista->nodo_fin;
+    lista->cantidad ++;
+
     return EXITO;
 }
 
