@@ -17,14 +17,14 @@ void probar_operaciones_lista(){
     lista_insertar_en_posicion(lista, &b, 1);
     lista_insertar_en_posicion(lista, &w, 3);
   
-    lista_borrar_de_posicion(lista, 3);
+    //lista_borrar_de_posicion(lista, 3);
     
     printf("Elementos en la lista: ");
     for(size_t i=0; i<lista_elementos(lista); i++)
         printf("%c ", *(char*)lista_elemento_en_posicion(lista, i));
     
     printf("\n\n");
-
+/*
     printf("Imprimo la lista usando el iterador externo: \n");
     lista_iterador_t* it = NULL;
 
@@ -42,11 +42,11 @@ void probar_operaciones_lista(){
     elementos_recorridos = lista_con_cada_elemento(lista, mostrar_elemento, (void*)&contador);
 
     printf("Recorri %lu elementos con el iterador interno y sume %i elementos\n", elementos_recorridos, contador);
-    
+    */
     printf("\n");
     lista_destruir(lista);
 }
-
+/*
 void probar_operaciones_cola(){
     lista_t* cola = lista_crear();
 
@@ -82,7 +82,7 @@ void probar_operaciones_pila(){
     }
     printf("\n");
     lista_destruir(pila);
-}
+}*/
 
 int main(){
 
@@ -90,10 +90,10 @@ int main(){
     probar_operaciones_lista();
   
     printf("\nPruebo el comportamiento de cola\n");
-    probar_operaciones_cola();
+    //probar_operaciones_cola();
     
     printf("\nPruebo el comportamiento de pila\n");
-    probar_operaciones_pila();
+    //probar_operaciones_pila();
     
     return 0;
 }
