@@ -5,13 +5,6 @@
 #define EXITO true
 #define ERROR false
 
-void probar_destruir_lista(lista_t* lista, const char* AFIRMACION) {
-    lista_destruir(lista);
-    bool destruccion = ERROR;
-    if (lista) destruccion = EXITO;
-    pa2m_afirmar(destruccion, AFIRMACION);
-}
-
 void compruebo_si_hay_la_cantidad_esperada(lista_t* lista, size_t cantidad_esperada, const char* AFIRMACION) {
     size_t es_la_esperada = ERROR;
     if (cantidad_esperada == lista_elementos(lista))
@@ -116,14 +109,14 @@ void pruebas_de_lista_con_1_solo_elemento() {
     compruebo_si_hay_la_cantidad_esperada(lista_unitaria, 1, "La lista contiene un unico elemento");
     pruebo_obtener_elemento(lista_unitaria, 0, "Puedo obtener el unico elemento de la lista");
     pruebo_obtener_ultimo_elemento(lista_unitaria, "Puedo obtener el unico elemento de la lista accediendo al ultimo");
-    probar_destruir_lista(lista_unitaria, "Puedo destruir una lista unitaria");
+    lista_destruir(lista_unitaria);
 }
 
 void pruebas_de_lista_vacia(){
     lista_t* lista_vacia = probar_creacion("Puedo crear una lista vacia");
     pruebo_obtener_elemento_de_lista_vacia(lista_vacia, 0);
     pruebo_obtener_ultimo_elemento(lista_vacia, "No puedo obtener el ultimo elemento de la lista porque esta vacia");
-    probar_destruir_lista(lista_vacia, "Puedo destruir una lista vacia");
+    lista_destruir(lista_vacia);
 }
 
 void pruebas_de_lista_con_4_elementos() {
@@ -138,7 +131,7 @@ void pruebas_de_lista_con_4_elementos() {
     pruebo_obtener_ultimo_elemento(lista_de_prueba, "Puedo obtener el ultimo elemento de la lista");
     probar_si_elementos_son_los_esperados(lista_de_prueba);
     //printf("\n Cant d elem: %ld\n", lista_de_prueba->cantidad);
-    probar_destruir_lista(lista_de_prueba, "Puedo destruir una lista que contiene elementos");
+    lista_destruir(lista_de_prueba);
 }
 
 int main(){
@@ -148,8 +141,9 @@ int main(){
     pruebas_de_lista_vacia();
     printf("\n");
     pruebas_de_lista_con_1_solo_elemento();
+    printf("\n");
     pa2m_nuevo_grupo("PRUEBAS DE PILA");
 
     pa2m_nuevo_grupo("PRUEBAS DE COLA");
-    return EXITO;
+    return 0;
 }

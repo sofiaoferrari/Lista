@@ -1,7 +1,7 @@
 CC= gcc
 WFLAGS= -Wall -Wconversion -Werror -Wtype-limits -pedantic -O0
 
-all: compilar exe_valgrind exe
+all: compilar exe_valgrind 
 
 compilar: lista.c pruebas.c 
 	$(CC) lista.c pruebas.c -o lista_se -g $(FLAGS) 

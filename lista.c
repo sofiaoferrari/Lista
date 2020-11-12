@@ -41,15 +41,15 @@ void lista_destruir(lista_t* lista) {
 }
 
 size_t lista_elementos(lista_t* lista) {
-    if (!lista) return ERROR;
+    if (!lista) return EXITO;
     return lista->cantidad;
 }
 
 bool lista_vacia(lista_t* lista) {
-    if ((!lista) || (lista->cantidad > 0)) 
-        return false;
-    if (lista->cantidad == 0)
+    if ((!lista) || (lista->cantidad == 0)) 
         return true;
+    if (lista->cantidad > 0)
+        return false;
 }
 
 void* lista_ultimo(lista_t* lista) {
