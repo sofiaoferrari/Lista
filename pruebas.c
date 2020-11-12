@@ -103,13 +103,14 @@ lista_t* probar_creacion(const char* AFIRMACION) {
 }
 
 void pruebas_de_lista_con_1_solo_elemento() {
-    lista_t* lista_unitaria = probar_creacion("Puedo crear una lista vacia");
+    lista_t* lista_unitaria = probar_creacion("Puedo crear una lista");
     pruebo_agregar_elemento(lista_unitaria, 'a');
     compruebo_que_lista_esta_vacia(lista_unitaria, "La lista no esta vacia");
     compruebo_si_hay_la_cantidad_esperada(lista_unitaria, 1, "La lista contiene un unico elemento");
     pruebo_obtener_elemento(lista_unitaria, 0, "Puedo obtener el unico elemento de la lista");
     pruebo_obtener_ultimo_elemento(lista_unitaria, "Puedo obtener el unico elemento de la lista accediendo al ultimo");
     lista_destruir(lista_unitaria);
+    printf("\n");
 }
 
 void pruebas_de_lista_vacia(){
@@ -117,10 +118,11 @@ void pruebas_de_lista_vacia(){
     pruebo_obtener_elemento_de_lista_vacia(lista_vacia, 0);
     pruebo_obtener_ultimo_elemento(lista_vacia, "No puedo obtener el ultimo elemento de la lista porque esta vacia");
     lista_destruir(lista_vacia);
+    printf("\n");
 }
 
 void pruebas_de_lista_con_4_elementos() {
-     lista_t* lista_de_prueba = probar_creacion("Puedo crear la lista");
+    lista_t* lista_de_prueba = probar_creacion("Puedo crear la lista");
     pruebo_agregar_elemento(lista_de_prueba, 'a');
     pruebo_agregar_otro_elemento(lista_de_prueba, 'b');
     pruebo_agregar_elemento_en_posicion(lista_de_prueba, 1, 'c');
@@ -128,20 +130,20 @@ void pruebas_de_lista_con_4_elementos() {
     compruebo_que_lista_esta_vacia(lista_de_prueba, "La lista no esta vacia");
     compruebo_si_hay_la_cantidad_esperada(lista_de_prueba, 4, "La lista contiene 4 elementos");
     pruebo_obtener_elemento(lista_de_prueba, 0, "Puedo obtener un elemento de una posicion especifica");
-    pruebo_obtener_ultimo_elemento(lista_de_prueba, "Puedo obtener el ultimo elemento de la lista");
     probar_si_elementos_son_los_esperados(lista_de_prueba);
+    pa2m_afirmar(lista_borrar(lista_de_prueba) == 0, "Puedo borrar el ultimo elemento de la lista");
+    pruebo_obtener_ultimo_elemento(lista_de_prueba, "Puedo obtener el ultimo elemento de la lista");
     //printf("\n Cant d elem: %ld\n", lista_de_prueba->cantidad);
     lista_destruir(lista_de_prueba);
+    printf("\n");
 }
 
 int main(){
     pa2m_nuevo_grupo("PRUEBAS DE LISTA");
     pruebas_de_lista_con_4_elementos();
-    printf("\n");
     pruebas_de_lista_vacia();
-    printf("\n");
     pruebas_de_lista_con_1_solo_elemento();
-    printf("\n");
+
     pa2m_nuevo_grupo("PRUEBAS DE PILA");
 
     pa2m_nuevo_grupo("PRUEBAS DE COLA");

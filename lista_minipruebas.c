@@ -6,7 +6,7 @@ bool mostrar_elemento(void* elemento, void* contador){
         printf("Elemento %i: %c \n", (*(int*)contador)++, *(char*)elemento);
     return true;
 }
-
+/*
 void probar_operaciones_lista(){
     lista_t* lista = lista_crear();
     char a='a', b='b', c='c', d='d', w='w';
@@ -16,15 +16,15 @@ void probar_operaciones_lista(){
     lista_insertar_en_posicion(lista, &d, 100);
     lista_insertar_en_posicion(lista, &b, 1);
     lista_insertar_en_posicion(lista, &w, 3);
-  
-    //lista_borrar_de_posicion(lista, 3);
+    //lista_borrar(lista);
+    lista_borrar_de_posicion(lista, 3);
     
     printf("Elementos en la lista: ");
     for(size_t i=0; i<lista_elementos(lista); i++)
         printf("%c ", *(char*)lista_elemento_en_posicion(lista, i));
     
     printf("\n\n");
-/*
+
     printf("Imprimo la lista usando el iterador externo: \n");
     lista_iterador_t* it = NULL;
 
@@ -42,10 +42,11 @@ void probar_operaciones_lista(){
     elementos_recorridos = lista_con_cada_elemento(lista, mostrar_elemento, (void*)&contador);
 
     printf("Recorri %lu elementos con el iterador interno y sume %i elementos\n", elementos_recorridos, contador);
-    */
+    
     printf("\n");
     lista_destruir(lista);
 }
+*/
 /*
 void probar_operaciones_cola(){
     lista_t* cola = lista_crear();
@@ -65,7 +66,7 @@ void probar_operaciones_cola(){
     printf("\n");
     lista_destruir(cola);
 }
-
+*/
 void probar_operaciones_pila(){
     lista_t* pila = lista_crear();
     char* algo="somtirogla";
@@ -74,26 +75,34 @@ void probar_operaciones_pila(){
         printf("Apilo %c\n", algo[i]);
         lista_apilar(pila, &algo[i]);
     }
+    printf("\n");
+    for(size_t i=0; i<lista_elementos(pila); i++) {
+        printf("%c",*(char*)lista_elemento_en_posicion(pila, i));
+        
+    }
+    printf("\n");
 
     printf("\nDesapilo y muestro los elementos apilados: ");
     while(!lista_vacia(pila)){
+        //printf("%ld", pila->cantidad);
+
         printf("%c", *(char*)lista_tope(pila));
         lista_desapilar(pila);
     }
     printf("\n");
     lista_destruir(pila);
-}*/
+}
 
 int main(){
 
     printf("Pruebo que la lista se comporte como lista\n");
-    probar_operaciones_lista();
+    //probar_operaciones_lista();
   
     printf("\nPruebo el comportamiento de cola\n");
     //probar_operaciones_cola();
     
     printf("\nPruebo el comportamiento de pila\n");
-    //probar_operaciones_pila();
+    probar_operaciones_pila();
     
     return 0;
 }

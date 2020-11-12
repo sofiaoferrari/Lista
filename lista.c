@@ -22,7 +22,9 @@ typedef struct lista_iterador{
 
 #define EXITO 0
 #define ERROR -1
-
+/*
+ * Procedimiento 
+*/
 void destruir_nodo(nodo_t* nodo) {
     if (nodo->siguiente)
         destruir_nodo(nodo->siguiente);
@@ -58,17 +60,21 @@ void* lista_ultimo(lista_t* lista) {
     return lista->nodo_fin->elemento;
 }
 
+void* lista_tope(lista_t* lista) {
+    return lista_ultimo(lista);
+}
+
 /*
  * Funcion que recorre la lista 
 */
 nodo_t* recorrer_lista(lista_t* lista, size_t posicion) {
     if ((lista->cantidad == 1) || (posicion == 0))
         return lista->nodo_inicio;
-    nodo_t* nodo_siguiente = lista->nodo_inicio->siguiente;
+    nodo_t* nodo = lista->nodo_inicio->siguiente;
     for (int i = 1; i < posicion; i++) {
-        nodo_siguiente = nodo_siguiente->siguiente;
+        nodo = nodo->siguiente;
     }
-    return nodo_siguiente;
+    return nodo;
 }
 
 void* lista_elemento_en_posicion(lista_t* lista, size_t posicion) {
@@ -76,6 +82,63 @@ void* lista_elemento_en_posicion(lista_t* lista, size_t posicion) {
     if (posicion >= lista->cantidad) return NULL;
     nodo_t* nodo_obtenido = recorrer_lista(lista, posicion);
     return nodo_obtenido->elemento;
+}
+
+int lista_borrar(lista_t* lista) {
+    if ((!lista) || (lista->cantidad == 0))
+        return ERROR;
+    if (lista->cantidad == 1) {
+        free(lista->nodo_fin);
+        lista->cantidad --;
+        return EXITO;
+    }
+    nodo_t* nodo_anteultimo = recorrer_lista(lista, (lista->cantidad -2));
+    //printf("\n Borro el siguiente a %c",*(char*)(nodo_anteultimo->siguiente)->elemento);
+    lista->nodo_fin = nodo_anteultimo;
+    free(nodo_anteultimo->siguiente);
+    lista->cantidad --;
+    return EXITO;
+}
+
+int lista_desapilar(lista_t* lista) {
+    return lista_borrar(lista);
+}
+
+int lista_borrar_de_posicion(lista_t* lista, size_t posicion) {
+    if ((!lista) || (lista->cantidad == 0))
+        return ERROR;
+    else if (posicion >= (lista->cantidad -1)) 
+        lista_borrar(lista);
+    nodo_t* nodo_anterior = recorrer_lista(lista, posicion-1);
+    nodo_t* nodo_siguiente = recorrer_lista(lista, posicion+1);
+    free(nodo_anterior->siguiente);
+    nodo_anterior->siguiente = nodo_siguiente;
+    lista->cantidad --;
+    return EXITO;
+}
+
+int lista_insertar(lista_t* lista, void* elemento) {
+    if (!lista) return ERROR;
+    size_t final = lista->cantidad;
+    nodo_t* nodo_anterior = NULL;
+    if (final > 0)
+        nodo_anterior = lista->nodo_fin;
+    nodo_t* nodo_aux = calloc(1, sizeof(nodo_t));
+    if (!nodo_aux) {
+        free(nodo_aux);
+        return ERROR;
+    }
+    lista->nodo_fin = nodo_aux; 
+    lista->nodo_fin->elemento = elemento;
+    if (final > 0) nodo_anterior->siguiente = lista->nodo_fin;
+    if (final == 0) lista->nodo_inicio = lista->nodo_fin;
+    lista->cantidad ++;
+
+    return EXITO;
+}
+
+int lista_apilar(lista_t* lista, void* elemento) {
+    return lista_insertar(lista, elemento);
 }
 
 int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion) {
@@ -99,25 +162,6 @@ int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion) 
     }
     nodo_t* nodo_anterior = recorrer_lista(lista, posicion-1);
     nodo_anterior->siguiente = nodo_aux;
-    return EXITO;
-}
-
-int lista_insertar(lista_t* lista, void* elemento) {
-    size_t final = lista->cantidad;
-    nodo_t* nodo_anterior = NULL;
-    if (final > 0)
-        nodo_anterior = lista->nodo_fin;
-    nodo_t* nodo_aux = calloc(1, sizeof(nodo_t));
-    if (!nodo_aux) {
-        free(nodo_aux);
-        return ERROR;
-    }
-    lista->nodo_fin = nodo_aux; 
-    lista->nodo_fin->elemento = elemento;
-    if (final > 0) nodo_anterior->siguiente = lista->nodo_fin;
-    if (final == 0) lista->nodo_inicio = lista->nodo_fin;
-    lista->cantidad ++;
-
     return EXITO;
 }
 
