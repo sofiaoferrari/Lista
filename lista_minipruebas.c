@@ -47,7 +47,7 @@ void probar_operaciones_lista(){
     lista_destruir(lista);
 }
 */
-/*
+/**/
 void probar_operaciones_cola(){
     lista_t* cola = lista_crear();
 
@@ -56,17 +56,22 @@ void probar_operaciones_cola(){
     for(size_t i=0; i<sizeof(numeros)/sizeof(int); i++){
         printf("Encolo %i\n", numeros[i]);
         lista_encolar(cola, &numeros[i]);
+        //printf("\nCantidad de elementos %ld\n", cola->cantidad);
     }
+
   
     printf("\nDesencolo los numeros y los muestro: ");
     while(!lista_vacia(cola)){
+        //printf("\nENTRO ACA\n");
         printf("%i ", *(int*)lista_primero(cola));
         lista_desencolar(cola);
+       // printf("\nCantidad de elementos %ld\n", cola->cantidad);
+        //printf("Lista Vacia: %i\n", lista_vacia(cola));
     }
     printf("\n");
     lista_destruir(cola);
 }
-*/
+
 void probar_operaciones_pila(){
     lista_t* pila = lista_crear();
     char* algo="somtirogla";
@@ -99,7 +104,7 @@ int main(){
     //probar_operaciones_lista();
   
     printf("\nPruebo el comportamiento de cola\n");
-    //probar_operaciones_cola();
+    probar_operaciones_cola();
     
     printf("\nPruebo el comportamiento de pila\n");
     probar_operaciones_pila();
