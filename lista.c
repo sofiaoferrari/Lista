@@ -180,10 +180,10 @@ int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion) 
     }
     nodo_t* nodo_aux = calloc(1, sizeof(nodo_t));
     if (!nodo_aux) return ERROR;
-
+    
     nodo_aux->elemento = elemento;
-    nodo_t* nodo_siguiente = recorrer_lista(lista, posicion);
-    nodo_aux->siguiente = nodo_siguiente;
+    nodo_t* nodo_actual = recorrer_lista(lista, posicion);
+    nodo_aux->siguiente = nodo_actual;
     lista->cantidad ++;
     if (posicion == PRIMERO) {
         lista->nodo_inicio = nodo_aux;
@@ -200,7 +200,8 @@ size_t lista_con_cada_elemento(lista_t* lista, bool (*funcion)(void*, void*), vo
     size_t cantidad = VACIA;
     bool corte = true;
     nodo_t* nodo_siguiente = lista->nodo_inicio;
-    while ((corte == true) && (nodo_siguiente)) {
+
+    while ((corte == true) && nodo_siguiente) {
         corte = funcion(nodo_siguiente->elemento, contexto);
         nodo_siguiente = nodo_siguiente->siguiente;
         cantidad++;
@@ -220,9 +221,11 @@ void* lista_iterador_elemento_actual(lista_iterador_t* iterador) {
 }
 
 bool lista_iterador_avanzar(lista_iterador_t* iterador) {
-    if ((!iterador) || (iterador->lista->cantidad == VACIA)) return false;
+    if ((!iterador) || (iterador->lista->cantidad == VACIA)) 
+        return false;
     iterador->corriente = iterador->corriente->siguiente;
     if (!iterador->corriente) return false;
+
     return true;
 }
 
