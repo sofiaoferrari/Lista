@@ -27,7 +27,10 @@ typedef struct lista_iterador{
 #define UNITARIA 1
 
 /*
- * Procedimiento 
+ * Procedimiento recursivo que dado un nodo inicio de una lista
+ * se ocupa de recorrerla hasta llegar al nodo fin de la misa. Una
+ * vez que llega al final de la lista, comienza a liberar cada uno
+ * de los nodos. 
 */
 void destruir_nodo(nodo_t* nodo) {
     if (nodo->siguiente)
@@ -47,15 +50,13 @@ void lista_destruir(lista_t* lista) {
 }
 
 size_t lista_elementos(lista_t* lista) {
-    if (!lista) return EXITO;
+    if (!lista) return VACIA;
     return lista->cantidad;
 }
 
 bool lista_vacia(lista_t* lista) {
-    if ((!lista) || (lista->cantidad == VACIA)) 
-        return true;
-    if (lista->cantidad > VACIA)
-        return false;
+
+    return (!lista) || (lista->cantidad == VACIA);
 }
 
 void* lista_primero(lista_t* lista) {
@@ -76,7 +77,9 @@ void* lista_tope(lista_t* lista) {
 }
 
 /*
- * Funcion que recorre la lista 
+ * Funcion que dada una lista y una posicion, recorre la lista de 
+ * forma iterativa hasta llegar al nodo que se encuentra en dicha posicion.
+ * Devulve el nodo obtenido.
 */
 nodo_t* recorrer_lista(lista_t* lista, size_t posicion) {
     if ((lista->cantidad == UNITARIA) || (posicion == PRIMERO))
@@ -104,7 +107,6 @@ int lista_borrar(lista_t* lista) {
         return EXITO;
     }
     nodo_t* nodo_anteultimo = recorrer_lista(lista, (lista->cantidad -2));
-    //printf("\n Borro el siguiente a %c",*(char*)(nodo_anteultimo->siguiente)->elemento);
     lista->nodo_fin = nodo_anteultimo;
     free(nodo_anteultimo->siguiente);
     nodo_anteultimo->siguiente = NULL;
@@ -193,7 +195,17 @@ int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion) 
 }
 
 size_t lista_con_cada_elemento(lista_t* lista, bool (*funcion)(void*, void*), void *contexto) {
-    
+    if ((!lista) || (lista->cantidad == VACIA) || (!funcion))
+        return VACIA;
+    size_t cantidad = VACIA;
+    bool corte = true;
+    nodo_t* nodo_siguiente = lista->nodo_inicio;
+    while ((corte == true) && (nodo_siguiente)) {
+        corte = funcion(nodo_siguiente->elemento, contexto);
+        nodo_siguiente = nodo_siguiente->siguiente;
+        cantidad++;
+    }
+    return cantidad;
 }
 
 void lista_iterador_destruir(lista_iterador_t* iterador) {
@@ -202,13 +214,15 @@ void lista_iterador_destruir(lista_iterador_t* iterador) {
 }
 
 void* lista_iterador_elemento_actual(lista_iterador_t* iterador) {
-    if (!iterador->lista) return NULL;
+    if ((!iterador) || (!iterador->corriente)) 
+        return NULL;
     return iterador->corriente->elemento;
 }
 
 bool lista_iterador_avanzar(lista_iterador_t* iterador) {
-    if (!iterador->lista) return false;
+    if ((!iterador) || (iterador->lista->cantidad == VACIA)) return false;
     iterador->corriente = iterador->corriente->siguiente;
+    if (!iterador->corriente) return false;
     return true;
 }
 

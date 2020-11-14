@@ -4,8 +4,6 @@
 
 #define EXITO 0
 #define ERROR -1
-#define LISTA_NULL lista
-#define AGREGAR_NADA agregar == 0
 
 void compruebo_si_hay_la_cantidad_esperada(lista_t* lista, size_t cantidad_esperada, const char* AFIRMACION) {
     size_t es_la_esperada = false;
@@ -16,7 +14,7 @@ void compruebo_si_hay_la_cantidad_esperada(lista_t* lista, size_t cantidad_esper
 
 void compruebo_que_lista_esta_vacia(lista_t* lista, const char* AFIRMACION) {
     bool vacia = lista_vacia(lista);
-    if (LISTA_NULL || (lista->cantidad > 0))
+    if (!lista || (lista->cantidad > 0))
         vacia = true;
     pa2m_afirmar(vacia, AFIRMACION);
 
@@ -91,7 +89,7 @@ void pruebo_agregar_otro_elemento(lista_t* lista, char elemento) {
 
 void pruebo_agregar_elemento(lista_t* lista, char elemento) {
     int agregar = lista_insertar(lista, &elemento);
-    if (AGREGAR_NADA) agregar = true;
+    if (agregar == 0) agregar = true;
     else agregar = false;
     pa2m_afirmar(agregar,"Puedo insertar un elemento a la lista");
 }
@@ -152,5 +150,6 @@ int main(){
     pa2m_nuevo_grupo("PRUEBAS DE PILA");
 
     pa2m_nuevo_grupo("PRUEBAS DE COLA");
+    pa2m_mostrar_reporte();
     return EXITO;
 }

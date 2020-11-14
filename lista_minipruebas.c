@@ -16,7 +16,7 @@ void probar_operaciones_lista(){
     lista_insertar_en_posicion(lista, &d, 100);
     lista_insertar_en_posicion(lista, &b, 1);
     lista_insertar_en_posicion(lista, &w, 3);
-    //lista_borrar(lista);
+
     lista_borrar_de_posicion(lista, 3);
     
     printf("Elementos en la lista: ");
@@ -35,14 +35,14 @@ void probar_operaciones_lista(){
     printf("\n\n");
 
     lista_iterador_destruir(it);
-/*
+
     int contador=0;
     size_t elementos_recorridos = 0;
     printf("Imprimo la lista usando el iterador interno: \n");
     elementos_recorridos = lista_con_cada_elemento(lista, mostrar_elemento, (void*)&contador);
 
     printf("Recorri %lu elementos con el iterador interno y sume %i elementos\n", elementos_recorridos, contador);
- */   
+   
     printf("\n");
     lista_destruir(lista);
 }
@@ -56,17 +56,13 @@ void probar_operaciones_cola(){
     for(size_t i=0; i<sizeof(numeros)/sizeof(int); i++){
         printf("Encolo %i\n", numeros[i]);
         lista_encolar(cola, &numeros[i]);
-        //printf("\nCantidad de elementos %ld\n", cola->cantidad);
     }
 
   
     printf("\nDesencolo los numeros y los muestro: ");
     while(!lista_vacia(cola)){
-        //printf("\nENTRO ACA\n");
         printf("%i ", *(int*)lista_primero(cola));
         lista_desencolar(cola);
-       // printf("\nCantidad de elementos %ld\n", cola->cantidad);
-        //printf("Lista Vacia: %i\n", lista_vacia(cola));
     }
     printf("\n");
     lista_destruir(cola);
@@ -80,17 +76,9 @@ void probar_operaciones_pila(){
         printf("Apilo %c\n", algo[i]);
         lista_apilar(pila, &algo[i]);
     }
-    printf("\n");
-    for(size_t i=0; i<lista_elementos(pila); i++) {
-        printf("%c",*(char*)lista_elemento_en_posicion(pila, i));
-        
-    }
-    printf("\n");
 
     printf("\nDesapilo y muestro los elementos apilados: ");
     while(!lista_vacia(pila)){
-        //printf("%ld", pila->cantidad);
-
         printf("%c", *(char*)lista_tope(pila));
         lista_desapilar(pila);
     }
