@@ -146,19 +146,18 @@ int lista_desencolar(lista_t* lista) {
 
 int lista_insertar(lista_t* lista, void* elemento) {
     if (!lista) return ERROR;
-    size_t final = lista->cantidad;
+
     nodo_t* nodo_anterior = NULL;
-    if (final > VACIA)
+    if (lista->cantidad > VACIA)
         nodo_anterior = lista->nodo_fin;
+
     nodo_t* nodo_aux = calloc(1, sizeof(nodo_t));
-    if (!nodo_aux) {
-        free(nodo_aux);
-        return ERROR;
-    }
+    if (!nodo_aux) return ERROR;
+
     lista->nodo_fin = nodo_aux; 
     lista->nodo_fin->elemento = elemento;
-    if (final > VACIA) nodo_anterior->siguiente = lista->nodo_fin;
-    if (final == VACIA) lista->nodo_inicio = lista->nodo_fin;
+    if (lista->cantidad > VACIA) nodo_anterior->siguiente = lista->nodo_fin;
+    else if (lista->cantidad == VACIA) lista->nodo_inicio = lista->nodo_fin;
     lista->cantidad ++;
 
     return EXITO;
@@ -180,17 +179,16 @@ int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion) 
     }
     nodo_t* nodo_aux = calloc(1, sizeof(nodo_t));
     if (!nodo_aux) return ERROR;
-    
     nodo_aux->elemento = elemento;
-    nodo_t* nodo_actual = recorrer_lista(lista, posicion);
-    nodo_aux->siguiente = nodo_actual;
-    lista->cantidad ++;
-    if (posicion == PRIMERO) {
-        lista->nodo_inicio = nodo_aux;
-        return EXITO;   
-    }
-    nodo_t* nodo_anterior = recorrer_lista(lista, posicion-1);
+
+    size_t posicion_anterior = PRIMERO;
+    if (posicion != posicion_anterior) posicion_anterior = posicion -1;
+    
+    nodo_t* nodo_anterior = recorrer_lista(lista, posicion_anterior);
+    nodo_aux->siguiente = nodo_anterior->siguiente;
     nodo_anterior->siguiente = nodo_aux;
+    lista->cantidad ++;  
+    
     return EXITO;
 }
 
