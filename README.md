@@ -14,7 +14,7 @@ gcc pruebas.c lista.c -o lista_se -g -std=c99 -Wall -Wconversion -Wtype-limits -
 ```
 O tambien se puede realizar utilizando el makefile con la siguiente linea:
  ```sh     
-    make compilacion
+    make compilar
 ``` 
 
 ### - Ejecucion:
