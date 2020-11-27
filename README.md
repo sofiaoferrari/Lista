@@ -45,12 +45,3 @@ Por otro lado, la cola tambien es una estructura de datos, pero FIFO (First in, 
 >Un iterador es un TDA auxiliar, el cual guarda la informacion que se necesita para optimizar los accesos a la estructura de la lista.
 **Iterador externo e iterador interno**
 La diferencia entre iterador externo e interno, es que el externo recorre la lista a traves de un puntero a sus nodos, el cual va cambiando de posicion a la siguiente por cada iteracion, mientras que el interno va accediendo a sus elementos a traves de un puntero. Esto provoca un cambio de complejidad O(n) en listas a O(1) en iteradores
-
-
-> The overriding design goal for Markdown's
-> formatting syntax is to make it as readable
-> as possible. The idea is that a
-> Markdown-formatted document should be
-> publishable as-is, as plain text, without
-> looking like it's been marked up with tags
-> or formatting instructions.
