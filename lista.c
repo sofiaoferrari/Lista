@@ -57,6 +57,57 @@ void* lista_tope(lista_t* lista) {
     return lista_ultimo(lista);
 }
 
+size_t lista_con_cada_elemento(lista_t* lista, bool (*funcion)(void*, void*), void *contexto) {
+    if ((!lista) || lista_vacia(lista) || (!funcion))
+        return VACIA;
+    size_t cantidad = VACIA;
+    bool corte = true;
+    nodo_t* nodo_siguiente = lista->nodo_inicio;
+
+    while ((corte == true) && nodo_siguiente) {
+        corte = funcion(nodo_siguiente->elemento, contexto);
+        nodo_siguiente = nodo_siguiente->siguiente;
+        cantidad++;
+    }
+    return cantidad;
+}
+
+void lista_iterador_destruir(lista_iterador_t* iterador) {
+    if(iterador)
+        free(iterador);
+}
+
+void* lista_iterador_elemento_actual(lista_iterador_t* iterador) {
+    if ((!iterador) || (!iterador->corriente)) 
+        return NULL;
+    return iterador->corriente->elemento;
+}
+
+bool lista_iterador_avanzar(lista_iterador_t* iterador) {
+    if ((!iterador) || (iterador->lista->cantidad == VACIA)) 
+        return false;
+    iterador->corriente = iterador->corriente->siguiente;
+    if (!iterador->corriente) return false;
+
+    return true;
+}
+
+bool lista_iterador_tiene_siguiente(lista_iterador_t* iterador) {
+    return iterador->corriente;
+}
+
+lista_iterador_t* lista_iterador_crear(lista_t* lista) {
+    if (!lista) return NULL;
+
+    lista_iterador_t* iterador = calloc(1,sizeof(lista_iterador_t));
+    if(!iterador) return NULL;
+
+    iterador->lista = lista;
+    iterador->corriente = lista->nodo_inicio;
+
+    return iterador;
+}
+
 /*
  * Funcion que dada una lista y una posicion, recorre la lista de 
  * forma iterativa hasta llegar al nodo que se encuentra en dicha posicion.
@@ -161,7 +212,7 @@ int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion) 
     nodo_t* nodo_aux = calloc(1, sizeof(nodo_t));
     if (!nodo_aux) return ERROR;
     nodo_aux->elemento = elemento;
-    
+
     nodo_t* nodo_actual = recorrer_lista(lista, posicion);
     nodo_aux->siguiente = nodo_actual;
     lista->cantidad ++;
@@ -172,57 +223,6 @@ int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion) 
     nodo_t* nodo_anterior = recorrer_lista(lista, posicion-1);
     nodo_anterior->siguiente = nodo_aux;
     return EXITO;
-}
-
-size_t lista_con_cada_elemento(lista_t* lista, bool (*funcion)(void*, void*), void *contexto) {
-    if ((!lista) || lista_vacia(lista) || (!funcion))
-        return VACIA;
-    size_t cantidad = VACIA;
-    bool corte = true;
-    nodo_t* nodo_siguiente = lista->nodo_inicio;
-
-    while ((corte == true) && nodo_siguiente) {
-        corte = funcion(nodo_siguiente->elemento, contexto);
-        nodo_siguiente = nodo_siguiente->siguiente;
-        cantidad++;
-    }
-    return cantidad;
-}
-
-void lista_iterador_destruir(lista_iterador_t* iterador) {
-    if(iterador)
-        free(iterador);
-}
-
-void* lista_iterador_elemento_actual(lista_iterador_t* iterador) {
-    if ((!iterador) || (!iterador->corriente)) 
-        return NULL;
-    return iterador->corriente->elemento;
-}
-
-bool lista_iterador_avanzar(lista_iterador_t* iterador) {
-    if ((!iterador) || (iterador->lista->cantidad == VACIA)) 
-        return false;
-    iterador->corriente = iterador->corriente->siguiente;
-    if (!iterador->corriente) return false;
-
-    return true;
-}
-
-bool lista_iterador_tiene_siguiente(lista_iterador_t* iterador) {
-    return iterador->corriente;
-}
-
-lista_iterador_t* lista_iterador_crear(lista_t* lista) {
-    if (!lista) return NULL;
-
-    lista_iterador_t* iterador = calloc(1,sizeof(lista_iterador_t));
-    if(!iterador) return NULL;
-
-    iterador->lista = lista;
-    iterador->corriente = lista->nodo_inicio;
-
-    return iterador;
 }
 
 lista_t* lista_crear() {
