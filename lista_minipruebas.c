@@ -47,7 +47,6 @@ void probar_operaciones_lista(){
     lista_destruir(lista);
 }
 
-/**/
 void probar_operaciones_cola(){
     lista_t* cola = lista_crear();
 
