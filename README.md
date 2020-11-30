@@ -20,11 +20,11 @@ O tambien se puede realizar utilizando el makefile con la siguiente linea:
 ### - Ejecucion:
 Una vez compilado se debe ejecutar con la siguiente linea de ejecuccion:
 ```sh     
-    ./lista_se
+   ./lista_se
 ```
 O tambien se puede realizar utilizando el makefile con la siguiente linea:
  ```sh     
-    make exe
+    make ejecutar
 ``` 
 
 #
@@ -38,8 +38,8 @@ O tambien se puede realizar utilizando el makefile con la siguiente linea:
     Lista simple y doblemente enlzada son dos tipos de lista, y ambas utilizan la implementacion de nodos. La diferencia que tienen es que, la lista simplemente enlazada contiene nodos con un puntero a su nodo siguiente, por lo que siempre se va a poder recorrer la lista hacia adelante, sin poder retroceder. Mientras que la lista doblemente enlazada contiene nodos con punteros a su nodo siguiente y a su nodo anterior, permitiendo recorrer la lista en ambos sentidos.
 
 #### 2. Pila y Cola
->La pila es una estructura de datos, cualquier tipo de dato. Asi como la lista, tambien agrupa elementos pero respetando la regla LIFO (Last in, First Out). Esto quiere decir que, una vez creada (create) la pila vacia (isEmpty), a esta se le pueden ir apilando (push) elementos pero siempre "por encima" del ultimo apilado, donde su ultimo elemento es el tope (top). Cuando se quieran desapilar (pop) elementos, tambien va a ser desde el ultimo apilado. 
-Por otro lado, la cola tambien es una estructura de datos, pero FIFO (First in, First Out). Cuando se crea la cola, los elementos se van a encolando a lo ultimo, es decir, despues del ultimo elemento ingresado y cuando se quieran desapilar va a comenzar por el primero que se encolo, y asi. Tanto pila como cola deben ser destruidos cuando no se quieran utilizar mas.
+>La pila es una estructura de cualquier tipo de dato. Asi como la lista, tambien agrupa elementos pero respetando la regla LIFO (Last in, First Out). Esto quiere decir que, una vez creada (create) la pila vacia (isEmpty), a esta se le pueden ir apilando (push) elementos pero siempre "por encima" del ultimo apilado, donde su ultimo elemento es el tope (top). Cuando se quieran desapilar (pop) elementos, tambien va a ser desde el ultimo apilado. 
+Por otro lado, la cola tambien es una estructura de datos, pero FIFO (First in, First Out). Cuando se crea la cola, los elementos se van a encolando a lo ultimo, es decir, despues del ultimo elemento ingresado y cuando se quieran desencolar va a comenzar por el primero que se encolo, y asi. Tanto pila como cola deben ser destruidos cuando no se quieran utilizar mas.
 
 #### 3. Iterador
 >Un iterador es un TDA auxiliar, el cual guarda la informacion que se necesita para optimizar los accesos a la estructura de la lista.
